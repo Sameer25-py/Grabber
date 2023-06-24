@@ -1,24 +1,39 @@
-using System;
 using UnityEngine;
 
 public class GloveController : MonoBehaviour
 {
-    [SerializeField] private Vector2 minMaxHorizontalPosition = new(-1.7f, 1.7f);
-    [SerializeField] private float   speed                    = 2f;
-    [SerializeField] private Vector2 initialPosition          = new Vector2(-1.7f, 0f);
-    private                  Camera  _mainCamera;
-    private                  Vector2 _mousePosition;
+    [SerializeField] private GameObject ballInGlove;
+    [SerializeField] private Vector2    minMaxHorizontalPosition = new(-1.7f, 1.7f);
+    [SerializeField] private float      speed                    = 2f;
+    [SerializeField] private Vector2    initialPosition          = new Vector2(-1.7f, 0f);
+    private                  Camera     _mainCamera;
+    private                  Vector2    _mousePosition;
 
     public bool EnableInput = false;
 
+    private void OnEnable()
+    {
+        Ball.Catch += OnBallCatch;
+    }
+
+    private void OnBallCatch()
+    {
+        ballInGlove.SetActive(true);
+    }
+
+    private void OnDisable()
+    {
+        Ball.Catch += OnBallCatch;
+    }
+
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         _mainCamera = Camera.main;
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (!Input.GetMouseButtonDown(0)) return;
         _mousePosition   = _mainCamera.ScreenToWorldPoint(Input.mousePosition);
