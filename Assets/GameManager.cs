@@ -1,12 +1,14 @@
 ﻿using System;
+using TMPro;
 using UnityEngine;
 
 namespace DefaultNamespace
 {
     public class GameManager : MonoBehaviour
     {
-        public static Action StartTurn;
-        public static Action EndTurn;
+        public        TMP_Text Score;
+        public static Action   StartTurn;
+        public static Action   EndTurn;
 
         private int _score = 0;
 
@@ -19,12 +21,13 @@ namespace DefaultNamespace
         private void OnBallFail()
         {
             Invoke(nameof(CallEndTurn), 0.2f);
-            Invoke(nameof(StartNextTurn), 0.8f);
+            Invoke(nameof(StartGame), 0.8f);
         }
 
         private void OnBallCatch()
         {
-            _score += 1;
+            _score     += 1;
+            Score.text =  _score.ToString();
             Invoke(nameof(CallEndTurn), 0.2f);
             Invoke(nameof(StartNextTurn), 0.5f);
         }
@@ -41,9 +44,16 @@ namespace DefaultNamespace
             StartTurn?.Invoke();
         }
 
+        private void StartGame()
+        {
+            _score = 0;
+            Score.text = _score.ToString();
+            StartNextTurn();
+        }
+
         private void Start()
         {
-            StartNextTurn();
+            StartGame();
         }
     }
 }
