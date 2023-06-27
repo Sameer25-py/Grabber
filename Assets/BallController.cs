@@ -1,3 +1,4 @@
+using DefaultNamespace;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -10,7 +11,14 @@ public class BallController : MonoBehaviour
 
     private void OnEnable()
     {
-        Ball.Catch += OnBallCatch;
+        Ball.Catch            += OnBallCatch;
+        GameManager.StartTurn += OnStartTurnCalled;
+        Ball.Fail             += OnBallFail;
+    }
+
+    private void OnStartTurnCalled()
+    {
+        ThrowBall();
     }
 
     private void OnBallCatch()
@@ -20,7 +28,14 @@ public class BallController : MonoBehaviour
 
     private void OnDisable()
     {
-        Ball.Catch -= OnBallCatch;
+        Ball.Catch            -= OnBallCatch;
+        Ball.Fail             -= OnBallFail;
+        GameManager.StartTurn += OnStartTurnCalled;
+    }
+
+    private void OnBallFail()
+    {
+        ball.transform.position = Vector3.up * ballIniitalVerticalOffset;
     }
 
     public void ThrowBall()

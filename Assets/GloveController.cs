@@ -1,3 +1,4 @@
+using DefaultNamespace;
 using UnityEngine;
 
 public class GloveController : MonoBehaviour
@@ -9,13 +10,27 @@ public class GloveController : MonoBehaviour
     private                  Camera     _mainCamera;
     private                  Vector2    _mousePosition;
 
-    public bool EnableInput = false;
+    public  bool EnableInput = false;
+    private bool _startTurn  = false;
 
     private void OnEnable()
     {
-        Ball.Catch += OnBallCatch;
+        Ball.Catch            += OnBallCatch;
+        GameManager.StartTurn += OnStartTurnCalled;
+        GameManager.EndTurn   += OnEndTurnCalled;
     }
 
+    private void OnEndTurnCalled()
+    {
+        _startTurn = false;
+    }
+
+    private void OnStartTurnCalled()
+    {
+        _startTurn = true;
+        ballInGlove.SetActive(false);
+    }
+    
     private void OnBallCatch()
     {
         ballInGlove.SetActive(true);
@@ -23,15 +38,19 @@ public class GloveController : MonoBehaviour
 
     private void OnDisable()
     {
-        Ball.Catch += OnBallCatch;
+        Ball.Catch            += OnBallCatch;
+        GameManager.StartTurn -= OnStartTurnCalled;
+        GameManager.EndTurn   -= OnEndTurnCalled;
     }
+
     private void Start()
     {
         _mainCamera = Camera.main;
     }
-    
+
     private void Update()
     {
+        if (!_startTurn) return;
         if (!Input.GetMouseButtonDown(0)) return;
         _mousePosition   = _mainCamera.ScreenToWorldPoint(Input.mousePosition);
         _mousePosition.x = Mathf.Clamp(_mousePosition.x, minMaxHorizontalPosition.x, minMaxHorizontalPosition.y);
