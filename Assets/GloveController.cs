@@ -25,20 +25,17 @@ public class GloveController : MonoBehaviour
     {
         Ball.Catch += OnBallCatch;
     }
-
-    // Start is called before the first frame update
     private void Start()
     {
         _mainCamera = Camera.main;
     }
-
-    // Update is called once per frame
+    
     private void Update()
     {
         if (!Input.GetMouseButtonDown(0)) return;
         _mousePosition   = _mainCamera.ScreenToWorldPoint(Input.mousePosition);
         _mousePosition.x = Mathf.Clamp(_mousePosition.x, minMaxHorizontalPosition.x, minMaxHorizontalPosition.y);
-        _mousePosition.y = 0f;
+        _mousePosition.y = initialPosition.y;
         EnableInput      = true;
     }
 

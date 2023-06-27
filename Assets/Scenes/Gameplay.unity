@@ -172,7 +172,7 @@ MonoBehaviour:
   ballInGlove: {fileID: 2095462799}
   minMaxHorizontalPosition: {x: -1.7, y: 1.7}
   speed: 15
-  initialPosition: {x: -1.7, y: 0}
+  initialPosition: {x: -1.7, y: -1}
   EnableInput: 0
 --- !u!50 &213037542
 Rigidbody2D:
