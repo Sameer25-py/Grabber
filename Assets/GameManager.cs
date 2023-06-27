@@ -6,9 +6,15 @@ namespace DefaultNamespace
 {
     public class GameManager : MonoBehaviour
     {
-        public        TMP_Text Score;
-        public static Action   StartTurn;
-        public static Action   EndTurn;
+        public TMP_Text   Score, UiScore;
+        public Ball       Ball;
+        public GameObject InGameUI, PauseMenu, EndMenu;
+
+        public static Action         StartTurn;
+        public static Action         EndTurn;
+        public static Action<string> ChangeLanguage;
+
+        public static string Language = "rus";
 
         private int _score = 0;
 
@@ -21,13 +27,14 @@ namespace DefaultNamespace
         private void OnBallFail()
         {
             Invoke(nameof(CallEndTurn), 0.2f);
-            Invoke(nameof(StartGame), 0.8f);
+            Invoke(nameof(EndGame), 0.8f);
         }
 
         private void OnBallCatch()
         {
-            _score     += 1;
-            Score.text =  _score.ToString();
+            _score       += 1;
+            Score.text   =  _score.ToString();
+            UiScore.text =  _score.ToString();
             Invoke(nameof(CallEndTurn), 0.2f);
             Invoke(nameof(StartNextTurn), 0.5f);
         }
@@ -37,7 +44,11 @@ namespace DefaultNamespace
             EndTurn?.Invoke();
         }
 
-        private void EndGame() { }
+        public void EndGame()
+        {
+            EndMenu.SetActive(true);
+            InGameUI.SetActive(false);
+        }
 
         private void StartNextTurn()
         {
@@ -46,10 +57,36 @@ namespace DefaultNamespace
 
         private void StartGame()
         {
-            _score = 0;
-            Score.text = _score.ToString();
+            _score       = 0;
+            Score.text   = _score.ToString();
+            UiScore.text = _score.ToString();
             StartNextTurn();
         }
+
+        public void PauseGame()
+        {
+            Ball.Stop();
+            Ball.gameObject.SetActive(false);
+            InGameUI.SetActive(false);
+            PauseMenu.SetActive(true);
+        }
+
+        public void ReturnToGame()
+        {
+            Ball.gameObject.SetActive(true);
+            Ball.Move();
+            InGameUI.SetActive(true);
+            PauseMenu.SetActive(false);
+        }
+
+        public void RestartGame()
+        {
+            EndMenu.SetActive(false);
+            InGameUI.SetActive(true);
+            StartNextTurn();
+        }
+
+        public void MainMenu() { }
 
         private void Start()
         {

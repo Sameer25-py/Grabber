@@ -44,9 +44,4 @@ public class BallController : MonoBehaviour
         ball.transform.position = new Vector3(randomXOffset, ballIniitalVerticalOffset, 0f);
         ball.Move();
     }
-
-    private void Start()
-    {
-        ThrowBall();
-    }
 }
