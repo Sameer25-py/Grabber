@@ -19,7 +19,7 @@ namespace DefaultNamespace
         private void OnBallFail()
         {
             Invoke(nameof(CallEndTurn), 0.2f);
-            Invoke(nameof(StartNextTurn), 0.5f);
+            Invoke(nameof(StartNextTurn), 0.8f);
         }
 
         private void OnBallCatch()
