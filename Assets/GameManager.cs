@@ -8,7 +8,7 @@ namespace DefaultNamespace
     {
         public TMP_Text   Score, UiScore;
         public Ball       Ball;
-        public GameObject InGameUI, PauseMenu, EndMenu;
+        public GameObject InGameUI, PauseMenu, EndMenu, Gameplay, MainMenu, Settings;
 
         public static Action         StartTurn;
         public static Action         EndTurn;
@@ -83,10 +83,10 @@ namespace DefaultNamespace
         {
             EndMenu.SetActive(false);
             InGameUI.SetActive(true);
-            StartNextTurn();
+            StartGame();
         }
 
-        public void MainMenu() { }
+        public void ShowMainMenu() { }
 
         private void Start()
         {

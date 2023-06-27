@@ -879,6 +879,9 @@ MonoBehaviour:
   InGameUI: {fileID: 86987018}
   PauseMenu: {fileID: 1826030939}
   EndMenu: {fileID: 2078461755}
+  Gameplay: {fileID: 0}
+  MainMenu: {fileID: 0}
+  Settings: {fileID: 0}
 --- !u!4 &500189495
 Transform:
   m_ObjectHideFlags: 0
@@ -1408,7 +1411,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 500189494}
         m_TargetAssemblyTypeName: DefaultNamespace.GameManager, Assembly-CSharp
-        m_MethodName: MainMenu
+        m_MethodName: RestartGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2100,7 +2103,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 500189494}
         m_TargetAssemblyTypeName: DefaultNamespace.GameManager, Assembly-CSharp
-        m_MethodName: MainMenu
+        m_MethodName: ShowMainMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2486,7 +2489,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 500189494}
         m_TargetAssemblyTypeName: DefaultNamespace.GameManager, Assembly-CSharp
-        m_MethodName: MainMenu
+        m_MethodName: ShowMainMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
