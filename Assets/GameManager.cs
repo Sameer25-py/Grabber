@@ -1,5 +1,6 @@
 ﻿using System;
 using TMPro;
+using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 
 namespace DefaultNamespace
@@ -14,14 +15,13 @@ namespace DefaultNamespace
         public static Action         EndTurn;
         public static Action<string> ChangeLanguage;
 
-        public static string Language = "rus";
+        public static string Language = "eng";
 
         private int _score = 0;
 
         private void OnEnable()
         {
             Ball.Catch += OnBallCatch;
-            Ball.Fail  += OnBallFail;
         }
 
         private void OnBallFail()
@@ -57,9 +57,12 @@ namespace DefaultNamespace
 
         private void StartGame()
         {
-            _score       = 0;
-            Score.text   = _score.ToString();
-            UiScore.text = _score.ToString();
+            Ball.Fail    += OnBallFail;
+            _score       =  0;
+            Score.text   =  _score.ToString();
+            UiScore.text =  _score.ToString();
+            InGameUI.SetActive(true);
+            Ball.gameObject.SetActive(true);
             StartNextTurn();
         }
 
@@ -86,11 +89,43 @@ namespace DefaultNamespace
             StartGame();
         }
 
-        public void ShowMainMenu() { }
-
-        private void Start()
+        public void Play()
         {
+            MainMenu.SetActive(false);
+            Gameplay.SetActive(true);
             StartGame();
+        }
+
+        public void ShowMainMenu()
+        {
+            Ball.Fail -= OnBallFail;
+            MainMenu.SetActive(true);
+            Gameplay.SetActive(false);
+            Settings.SetActive(false);
+            EndMenu.SetActive(false);
+            PauseMenu.SetActive(false);
+        }
+
+        public void ReturnToMenu()
+        {
+            Settings.SetActive(false);
+            MainMenu.SetActive(true);
+        }
+
+        public void ShowSettings()
+        {
+            Settings.SetActive(true);
+            MainMenu.SetActive(false);
+        }
+
+        public void ToggleVolume(bool state) { }
+
+        public void ToggleVibration(bool state) { }
+
+        public void ToggleLanguage(bool state)
+        {
+            Language = state ? "eng" : "rus";
+            ChangeLanguage?.Invoke(Language);
         }
     }
 }
