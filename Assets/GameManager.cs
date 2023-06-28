@@ -1,7 +1,9 @@
 ﻿using System;
 using TMPro;
+using Unity.VisualScripting;
 using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace DefaultNamespace
 {
@@ -10,6 +12,7 @@ namespace DefaultNamespace
         public TMP_Text   Score, UiScore;
         public Ball       Ball;
         public GameObject InGameUI, PauseMenu, EndMenu, Gameplay, MainMenu, Settings;
+        public GameObject FirstTimeUI;
 
         public static Action         StartTurn;
         public static Action         EndTurn;
@@ -17,7 +20,7 @@ namespace DefaultNamespace
 
         public static string Language = "eng";
 
-        private int _score = 0;
+        private int  _score      = 0;
 
         private void OnEnable()
         {
@@ -93,6 +96,7 @@ namespace DefaultNamespace
         {
             MainMenu.SetActive(false);
             Gameplay.SetActive(true);
+            FirstTimeUI.SetActive(true);
             StartGame();
         }
 
@@ -126,6 +130,14 @@ namespace DefaultNamespace
         {
             Language = state ? "eng" : "rus";
             ChangeLanguage?.Invoke(Language);
+        }
+
+        private void Update()
+        {
+            if (Input.GetMouseButtonDown(0))
+            {   
+                FirstTimeUI.SetActive(false);
+            }
         }
     }
 }
