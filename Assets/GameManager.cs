@@ -18,11 +18,14 @@ namespace DefaultNamespace
         public static Action         EndTurn;
         public static Action<string> ChangeLanguage;
 
+
+        public AudioSource AudioSource;
+
         public static string Language = "eng";
 
         private bool _enableVibration = true;
 
-        private int  _score      = 0;
+        private int _score = 0;
 
         private void OnEnable()
         {
@@ -41,6 +44,7 @@ namespace DefaultNamespace
             {
                 Handheld.Vibrate();
             }
+
             _score       += 1;
             Score.text   =  _score.ToString();
             UiScore.text =  _score.ToString();
@@ -139,10 +143,15 @@ namespace DefaultNamespace
             ChangeLanguage?.Invoke(Language);
         }
 
+        public void ToggleSound(bool state)
+        {
+            AudioSource.mute = !state;
+        }
+
         private void Update()
         {
             if (Input.GetMouseButtonDown(0))
-            {   
+            {
                 FirstTimeUI.SetActive(false);
             }
         }
