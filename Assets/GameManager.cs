@@ -20,6 +20,8 @@ namespace DefaultNamespace
 
         public static string Language = "eng";
 
+        private bool _enableVibration = true;
+
         private int  _score      = 0;
 
         private void OnEnable()
@@ -35,6 +37,10 @@ namespace DefaultNamespace
 
         private void OnBallCatch()
         {
+            if (_enableVibration)
+            {
+                Handheld.Vibrate();
+            }
             _score       += 1;
             Score.text   =  _score.ToString();
             UiScore.text =  _score.ToString();
@@ -122,9 +128,10 @@ namespace DefaultNamespace
             MainMenu.SetActive(false);
         }
 
-        public void ToggleVolume(bool state) { }
-
-        public void ToggleVibration(bool state) { }
+        public void ToggleVibration(bool state)
+        {
+            _enableVibration = state;
+        }
 
         public void ToggleLanguage(bool state)
         {
