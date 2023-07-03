@@ -9,7 +9,7 @@ namespace DefaultNamespace
 {
     public class GameManager : MonoBehaviour
     {
-        public TMP_Text   Score, UiScore;
+        public TMP_Text   Score, UiScore, BestScore, BestScore2;
         public Ball       Ball;
         public GameObject InGameUI, PauseMenu, EndMenu, Gameplay, MainMenu, Settings;
         public GameObject FirstTimeUI;
@@ -45,9 +45,11 @@ namespace DefaultNamespace
                 Handheld.Vibrate();
             }
 
-            _score       += 1;
-            Score.text   =  _score.ToString();
-            UiScore.text =  _score.ToString();
+            _score          += 1;
+            Score.text      =  _score.ToString();
+            UiScore.text    =  _score.ToString();
+            BestScore.text  =  _score.ToString();
+            BestScore2.text =  _score.ToString();
             Invoke(nameof(CallEndTurn), 0.2f);
             Invoke(nameof(StartNextTurn), 0.5f);
         }
@@ -70,10 +72,12 @@ namespace DefaultNamespace
 
         private void StartGame()
         {
-            Ball.Fail    += OnBallFail;
-            _score       =  0;
-            Score.text   =  _score.ToString();
-            UiScore.text =  _score.ToString();
+            Ball.Fail       += OnBallFail;
+            _score          =  0;
+            Score.text      =  _score.ToString();
+            UiScore.text    =  _score.ToString();
+            BestScore.text  =  _score.ToString();
+            BestScore2.text =  _score.ToString();
             InGameUI.SetActive(true);
             Ball.gameObject.SetActive(true);
             StartNextTurn();
